@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/anmol/anscer_task/install/tutorial_interfaces/include/**",
+        "/home/anmol/ws_offboard_control/install/tutorial_interfaces/include/**",
+        "/home/anmol/ws_offboard_control/install/px4_ros_com/include/**",
+        "/home/anmol/ws_offboard_control/install/px4_msgs/include/**",
+        "/home/anmol/ws_offboard_control/install/custom_msgs/include/**",
+        "/home/anmol/ws_offboard_control/install/astra_msgs/include/**",
+        "/home/anmol/ws_offboard_control/install/action_tutorials_interfaces/include/**",
+        "/home/anmol/ws_offboard_control/install/action_commands/include/**",
+        "/home/anmol/turtlebot_ws/install/turtlebot3_gazebo/include/**",
+        "/home/anmol/turtlebot_ws/install/turtlebot3_fake_node/include/**",
+        "/home/anmol/autonomous_iit/install/tutorial_interfaces/include/**",
+        "/home/anmol/autonomous_iit/install/px4_ros_com/include/**",
+        "/home/anmol/autonomous_iit/install/action_commands/include/**",
+        "/home/anmol/nav2_tutorials/install/nav2_straightline_planner/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/anmol/anscer_task/src/trajectory_op/include/**",
+        "/home/anmol/anscer_task/src/tutorial_interfaces/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
