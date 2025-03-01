@@ -68,6 +68,6 @@ ros2 run trajectory_op traj_publisher_reader --ros-args -p filename:=trajectory
 
 ## 9. Approach
 
-- The trajectory saver node will continuously subscribe to the callback and if there is a significant change in movement with a distance threshold then the marker will be intialized at that particular position and will be pushed in the array also there will be global counter that will have the count of markers appended.
+- The trajectory saver node will continuously subscribe to the odom callback and if there is a significant change in movement with a distance threshold then the marker will be intialized at that particular position and will be pushed in the array also there will be global counter that will have the count of markers appended.
 - Once the request is received by the server the markers from the start_count till the end_count after the time duration will be taken into consideration for loading the trajectory in the yaml file that will be saved in the share of the directory.
 - The trajectory_reader node will just read the yaml file and will publish the marker_array. That can be visualized in the rviz as seen in the image above.
