@@ -47,10 +47,10 @@ ros2 run trajectory_op traj_publisher_saver
 
 ## 7. Give a goal through nav2.
 
-![Give a nav2 goal.](![Screenshot from 2025-03-01 10-28-31](https://github.com/user-attachments/assets/8ed9b5b0-4c30-4847-818c-6920e4e81a0a)
+(![Screenshot from 2025-03-01 10-28-31](https://github.com/user-attachments/assets/8ed9b5b0-4c30-4847-818c-6920e4e81a0a)
 )
 
-Give a nav2 goal.
+
 
 ## 7. Visualization of trajectory.
 
@@ -62,10 +62,9 @@ ros2 run trajectory_op traj_publisher_reader --ros-args -p filename:=trajectory
 
 ## 8. The trajectory will be published on a topic as a Marker Array.
 
-![Trajectory as saved for that particular duration.](![Screenshot from 2025-03-01 10-32-08](https://github.com/user-attachments/assets/f07f0ea0-0e4c-4b5a-9b5b-7439d1225c64)
+(![Screenshot from 2025-03-01 10-32-08](https://github.com/user-attachments/assets/f07f0ea0-0e4c-4b5a-9b5b-7439d1225c64)
 )
 
-Trajectory as saved for that particular duration.
 
 ## 9. Approach
 
