@@ -21,12 +21,13 @@ find_package(tutorial_interfaces REQUIRED)
 find_package(yaml-cpp REQUIRED)     
 find_package(tf2_ros REQUIRED)   
 find_package(tf2_geometry_msgs REQUIRED)   
+find_package(nav2_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 add_executable(traj_publisher_saver src/traj_pub_saver.cpp)
-ament_target_dependencies(traj_publisher_saver rclcpp nav_msgs visualization_msgs tutorial_interfaces geometry_msgs yaml-cpp)
+ament_target_dependencies(traj_publisher_saver rclcpp nav_msgs visualization_msgs tutorial_interfaces geometry_msgs yaml-cpp nav2_msgs)
 
 add_executable(traj_publisher_reader src/traj_pub_reader.cpp)
 ament_target_dependencies(traj_publisher_reader rclcpp nav_msgs visualization_msgs tutorial_interfaces std_msgs geometry_msgs yaml-cpp tf2_ros tf2_geometry_msgs)

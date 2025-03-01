@@ -17,6 +17,12 @@
 #include <rclcpp/executors/multi_threaded_executor.hpp>
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <filesystem>
+#include <nav2_msgs/srv/set_initial_pose.hpp>
+
+
+
+using SetInitialPose = nav2_msgs::srv::SetInitialPose;
+
 
 using std::placeholders::_1;
 using namespace std;
@@ -36,8 +42,13 @@ class traj_pub_Saver : public rclcpp::Node
       options.callback_group = odom_callback_group_;
       traj_subscription_ = this->create_subscription<nav_msgs::msg::Odometry>(
       "/odom", 10, std::bind(&traj_pub_Saver::traj_callback,this, _1),options);
+      client_service = this->create_client<SetInitialPose>("set_initial_pose");
 
       publisher_ = this->create_publisher<visualization_msgs::msg::Marker>("marker", 10);
+        while (!client_service->wait_for_service(std::chrono::seconds(5))) {
+            RCLCPP_WARN(this->get_logger(), "Waiting for action server...");
+        }
+      set_initial_pose();
       timer_ = this->create_wall_timer(
       500ms, std::bind(&traj_pub_Saver::timer_callback, this));
 
@@ -104,7 +115,7 @@ void saveMarkerArrayToYAML(const visualization_msgs::msg::MarkerArray& filter_ma
     }
     emitter << YAML::EndSeq;
     string package_share_dir = ament_index_cpp::get_package_share_directory("trajectory_op");
-    string trajectories_dir = package_share_dir + "/trajectories/";
+    string trajectories_dir = package_share_dir + "/trajectories";
     if (!fs::exists(trajectories_dir)) {
         fs::create_directories(trajectories_dir);
     }
@@ -119,6 +130,39 @@ void saveMarkerArrayToYAML(const visualization_msgs::msg::MarkerArray& filter_ma
 }
 
 private:
+
+
+    void set_initial_pose(){
+        auto request= std::make_shared<SetInitialPose::Request>();
+        if(!client_service->wait_for_service(std::chrono::seconds(4))){
+            RCLCPP_WARN(this->get_logger(), "Waiting for service server...");
+        }
+        request->pose.header.stamp = this->get_clock()->now();
+        request->pose.header.frame_id = "map";
+
+
+        request->pose.pose.pose.position.x = 0.0;
+        request->pose.pose.pose.position.y = 0.0;
+        request->pose.pose.pose.position.z = 0.0;
+
+        request->pose.pose.pose.orientation.x = 0.0;
+        request->pose.pose.pose.orientation.y = 0.0;
+        request->pose.pose.pose.orientation.z = 0.0;
+        request->pose.pose.pose.orientation.w = 1.0;
+
+        using ServiceResponseFuture = rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedFuture;
+        auto future = client_service->async_send_request(request, std::bind(&traj_pub_Saver::response_callback, this, std::placeholders::_1));
+    }
+
+    void response_callback(rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedFuture future) {
+        try {
+            auto result = future.get();
+            RCLCPP_INFO(this->get_logger(), "Initial pose set successfully.");
+        } catch (const std::exception &e) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to set initial pose: %s", e.what());
+        }
+    }
+
     void timer_callback()
     {
         if (!marker_array.markers.empty()) {
@@ -158,6 +202,8 @@ private:
     rclcpp::Service<tutorial_interfaces::srv::Saver>::SharedPtr service;
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::CallbackGroup::SharedPtr odom_callback_group_;
+    rclcpp::Client<SetInitialPose>::SharedPtr client_service;
+
     size_t count_;
 };
 
